@@ -17,90 +17,30 @@ import {
 } from '@/components/ui/carousel';
 import { VideoPlayer } from '@/components/video-player';
 import MainLayout from '@/layouts/main-layout';
+import { Banner, Post, Product } from '@/types';
 import { ArrowRight, Banknote, MapPin, Target, Timer } from 'lucide-react';
 
-const carouselItems = [
-  {
-    image: '/images/welcome/carousel-1.jpg',
-    alt: 'Carousel Image 1',
-    title: 'Title 1',
-    description: 'Description 1',
-  },
-  {
-    image: '/images/welcome/carousel-2.jpg',
-    alt: 'Carousel Image 2',
-    title: 'Title 2',
-    description: 'Description 2',
-  },
-];
+interface Props {
+  posts: Post[];
+  products: Product[];
+  banners: Banner[];
+}
 
-const products = [
-  {
-    title: 'Kit PPK T2R L1/L2 para Air 2S',
-    image: 'https://placehold.co/400x300/f8f9fa/666?text=Drone+Air+2S',
-  },
-  {
-    title: 'Kit PPK T2R L1/L2 para Linha Phantom 4 ADV/PRO/PROv2',
-    image: 'https://placehold.co/400x300/f8f9fa/666?text=Phantom+4',
-  },
-  {
-    title: 'Kit PPK T2R L1/L2 para Mini 3',
-    image: 'https://placehold.co/400x300/f8f9fa/666?text=Drone+Mini+3',
-  },
-  {
-    title: 'Kit PPK T2R L1 para Mini 2',
-    image: 'https://placehold.co/400x300/f8f9fa/666?text=Drone+Mini+2',
-  },
-  {
-    title: 'Produto Adicional',
-    image: 'https://placehold.co/400x300/f8f9fa/666?text=Outro+Kit',
-  },
-];
-
-const posts = [
-  {
-    title:
-      'Integração de dados corrigidos utilizando T2R Geotagger no Método PPK',
-    description:
-      'Neste vídeo da Drone Experts, é apresentado o processo final...',
-    image: 'https://placehold.co/600x400/059669/white?text=Integração+PPK',
-  },
-  {
-    title:
-      'Guia Detalhado de Mapeamento com DJI Air 2S + Kit PPK T2R no DroneLink',
-    description:
-      'Neste vídeo, utilizaremos um plano de voo previamente confeccionado no...',
-    image: 'https://placehold.co/600x400/ea580c/white?text=Guia+Mapeamento',
-  },
-  {
-    title:
-      'Planejamento de Voo com Dronelink e Drone DJI Air 2S + KIT PPK da T2R',
-    description: 'Neste vídeo trataremos sobre o aplicativo Dronelink ()...',
-    image: 'https://placehold.co/600x400/2563eb/white?text=Planejamento+Voo',
-  },
-  {
-    title: 'Postagem Adicional de Exemplo',
-    description:
-      'Confira mais detalhes sobre as novas tecnologias de georreferenciamento...',
-    image: 'https://placehold.co/600x400/4b5563/white?text=Tecnologia',
-  },
-];
-
-export default function Welcome() {
+export default function Welcome({ posts, products, banners }: Props) {
   return (
     <MainLayout>
       <Head title="Welcome" />
       <section className="mx-auto w-full">
         <Carousel className="group relative w-full">
           <CarouselContent>
-            {carouselItems.map((item, index) => (
+            {banners.map((item, index) => (
               <CarouselItem key={index}>
                 <div className="p-0">
-                  <Card className="overflow-hidden rounded-none border-none">
-                    <CardContent className="relative flex aspect-21/9 items-center justify-end p-0">
+                  <Card className="overflow-hidden rounded-none border-none py-0">
+                    <CardContent className="relative flex aspect-21/9 items-center justify-end p-0!">
                       <img
-                        src={item.image}
-                        alt={item.alt}
+                        src={item.image_path}
+                        alt={item.title}
                         className="absolute inset-0 h-full w-full object-cover"
                       />
 
@@ -121,34 +61,34 @@ export default function Welcome() {
         </Carousel>
       </section>
 
-      <section className="bg-[#e9ecef] px-6 py-20">
+      <section className="px-6 py-20">
         <div className="mx-auto max-w-7xl text-center">
-          <h2 className="mb-16 text-3xl font-bold text-[#333]">
+          <h2 className="mb-16 text-2xl font-bold md:text-3xl">
             Vantagens da Integração PPK
           </h2>
 
           <div className="mb-24 grid grid-cols-2 gap-8 md:grid-cols-4">
             <div className="flex flex-col items-center gap-4">
-              <MapPin />
-              <p className="max-w-37.5 text-sm font-semibold text-[#333]">
+              <MapPin size={40} />
+              <p className="max-w-56 text-xs font-semibold md:text-lg">
                 Redução drástica de pontos de controle
               </p>
             </div>
             <div className="flex flex-col items-center gap-4">
-              <Target />
-              <p className="max-w-37.5 text-sm font-semibold text-[#333]">
+              <Target size={40} />
+              <p className="max-w-56 text-xs font-semibold md:text-lg">
                 Acurácia centimétrica
               </p>
             </div>
             <div className="flex flex-col items-center gap-4">
-              <Timer />
-              <p className="max-w-37.5 text-sm font-semibold text-[#333]">
+              <Timer size={40} />
+              <p className="max-w-56 text-xs font-semibold md:text-lg">
                 Redução de tempo em campo
               </p>
             </div>
             <div className="flex flex-col items-center gap-4">
-              <Banknote />
-              <p className="max-w-37.5 text-sm font-semibold text-[#333]">
+              <Banknote size={40} />
+              <p className="max-w-56 text-xs font-semibold md:text-lg">
                 Redução de custos em campo
               </p>
             </div>
@@ -156,10 +96,10 @@ export default function Welcome() {
 
           <div className="flex flex-col items-center justify-between gap-12 text-left lg:flex-row">
             <div className="order-2 lg:order-1 lg:w-1/2">
-              <h3 className="mb-6 text-2xl font-bold text-[#333]">
+              <h3 className="mb-6 text-2xl font-bold md:text-3xl">
                 Integração do PPK em alta precisão
               </h3>
-              <p className="text-sm leading-relaxed text-[#555] lg:text-base">
+              <p className="text-sm leading-relaxed md:text-base">
                 A integração do PPK ao drone é realizada de forma rigorosa,
                 sincronizando o disparo exato da câmara ao receptor GNSS, para
                 proporcionar dados georreferenciados de alta precisão.
@@ -176,7 +116,7 @@ export default function Welcome() {
         </div>
       </section>
 
-      <section className="border-t border-gray-200 bg-[#e9ecef] px-6 py-20">
+      <section className="border-t border-gray-200 px-6 py-20">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-16 lg:flex-row">
           <div className="flex justify-center lg:w-1/2 lg:justify-start">
             <img
@@ -186,10 +126,10 @@ export default function Welcome() {
             />
           </div>
           <div className="text-left lg:w-1/2">
-            <h2 className="mb-8 text-3xl font-bold text-[#222]">
+            <h2 className="mb-8 text-2xl font-bold md:text-3xl">
               Integração rigorosa
             </h2>
-            <div className="space-y-6 text-sm leading-relaxed text-[#444] lg:text-base">
+            <div className="space-y-6 text-sm leading-relaxed md:text-base">
               <p>
                 A instalação do sistema PPK da T2R é realizada de maneira fina
                 ao sistema interno do drone, ou seja, captamos o sinal de evento
@@ -209,16 +149,11 @@ export default function Welcome() {
         </div>
       </section>
 
-      <section className="w-full bg-[#f2f2f2] py-16">
+      <section className="w-full py-16">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 flex items-center justify-between">
-            <h2 className="text-3xl font-bold text-gray-900">
-              Nossos produtos
-            </h2>
-            <Button
-              variant="outline"
-              className="bg-white px-6 font-semibold text-gray-900 hover:bg-gray-100"
-            >
+            <h2 className="text-2xl font-bold md:text-3xl">Nossos produtos</h2>
+            <Button className="flex h-auto! items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white">
               Ver Todos
             </Button>
           </div>
@@ -240,7 +175,7 @@ export default function Welcome() {
                     <CardContent className="p-0">
                       <div className="flex aspect-4/3 items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
                         <img
-                          src={product.image}
+                          src={product.cover_image ?? ''}
                           alt={product.title}
                           className="h-full w-full object-contain"
                         />
@@ -248,14 +183,14 @@ export default function Welcome() {
                     </CardContent>
 
                     <CardFooter className="mt-4 flex flex-col items-start space-y-4 p-0">
-                      <h3 className="min-h-12 text-sm leading-snug font-semibold text-gray-800 md:text-base">
+                      <h3 className="min-h-12 text-sm leading-snug font-semibold md:text-base">
                         {product.title}
                       </h3>
                       <Button
                         variant="secondary"
-                        className="rounded-md border border-gray-300 bg-[#f2f2f2] px-6 py-2 font-medium text-gray-700 hover:bg-gray-200"
+                        className="rounded-md border border-gray-300 px-6 py-2 font-medium hover:bg-gray-200"
                       >
-                        Read more
+                        Saiba Mais
                       </Button>
                     </CardFooter>
                   </Card>
@@ -263,8 +198,8 @@ export default function Welcome() {
               ))}
             </CarouselContent>
 
-            <CarouselPrevious className="-left-12 hidden opacity-50 hover:opacity-100 lg:flex" />
-            <CarouselNext className="-right-12 hidden opacity-50 hover:opacity-100 lg:flex" />
+            <CarouselPrevious className="-left-12 hidden border-none bg-white/80 lg:flex" />
+            <CarouselNext className="-right-12 hidden border-none bg-white/80 lg:flex" />
           </Carousel>
         </div>
       </section>
@@ -287,10 +222,10 @@ export default function Welcome() {
           </div>
 
           <div className="text-left lg:w-1/2">
-            <h3 className="mb-6 text-2xl font-bold text-white">
+            <h3 className="mb-6 text-2xl font-bold text-white md:text-3xl">
               Processamento dos dados
             </h3>
-            <div className="space-y-6 text-sm leading-relaxed text-gray-400 lg:text-base">
+            <div className="space-y-6 text-sm leading-relaxed md:text-base">
               <p>
                 Visando alcançar coordenadas de altíssima precisão e acurácia,
                 dispomos de um fluxo de processamento especializado para atender
@@ -316,13 +251,13 @@ export default function Welcome() {
         </div>
       </section>
 
-      <section className="border-t border-gray-800 bg-[#1a1d21] px-6 py-20 text-white">
+      <section className="bg-[#1a1d21] px-6 py-20 text-white">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 lg:flex-row">
           <div className="text-left lg:w-1/2">
-            <h3 className="mb-6 text-2xl font-bold text-white">
+            <h3 className="mb-6 text-2xl font-bold text-white md:text-3xl">
               Sem Pontos de Controle
             </h3>
-            <p className="text-sm leading-relaxed text-gray-400 lg:text-base">
+            <p className="text-sm leading-relaxed md:text-base">
               Elimina a necessidade de pontos de controle em campo, reduzindo
               drasticamente o custo e o tempo do projeto.
             </p>
@@ -337,27 +272,30 @@ export default function Welcome() {
           </div>
         </div>
       </section>
-      <section className="border-t border-gray-800 bg-[#1a1d21] px-6 py-20 text-white">
+      <section className="bg-[#1a1d21] px-6 py-20 text-white">
         <div className="mx-auto w-10/12 max-w-7xl">
-          <VideoPlayer localVideo="/home/alt_mov_t2r_camp-inst_1920x1080px.mp4" />
+          <VideoPlayer
+            localVideo="/home/alt_mov_t2r_camp-inst_1920x1080px.mp4"
+            thumbnail="/t2r-thumb.png"
+          />
         </div>
       </section>
 
-      <section className="bg-[#f2f2f2] px-4 py-16 sm:px-6 lg:px-8">
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div className="w-full">
             <VideoPlayer
-              thumbnail="https://placehold.co/600x400/white/000?text=Metashape+Logo"
-              embedUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              thumbnail="/metashape-thumb.webp"
+              embedUrl="https://www.youtube.com/embed/qTDgAuybMmw"
             />
           </div>
 
           <div className="space-y-6 text-left">
-            <h2 className="text-3xl leading-tight font-bold text-gray-900 md:text-4xl">
+            <h2 className="text-2xl leading-tight font-bold md:text-3xl">
               Revendedor Oficial no Brasil - Agisoft Metashape
             </h2>
 
-            <p className="text-lg leading-relaxed text-gray-700">
+            <p className="text-sm leading-relaxed md:text-base">
               Agisoft Metashape é um software independente que realiza o
               processamento fotogramétrico de imagens digitais e gera dados
               espaciais em 3D para uso em aplicações GIS, documentação de
@@ -366,26 +304,20 @@ export default function Welcome() {
             </p>
 
             <div>
-              <a
-                href="#"
-                className="inline-block rounded-md bg-gray-200 px-8 py-3 font-semibold text-gray-900 shadow-sm transition-colors duration-200 hover:bg-gray-300"
-              >
+              <Button className="flex h-auto! items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white">
                 Saiba Mais
-              </a>
+              </Button>
             </div>
           </div>
         </div>
       </section>
-      <section className="w-full bg-[#f2f2f2] py-16">
+      <section className="w-full py-16">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 flex items-center justify-between">
-            <h2 className="text-3xl font-bold text-gray-800">
+            <h2 className="text-2xl font-bold md:text-3xl">
               Confira nossas postagens
             </h2>
-            <Button
-              variant="outline"
-              className="border-none bg-white px-6 text-gray-900 shadow-sm hover:bg-gray-100"
-            >
+            <Button className="flex h-auto! items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white">
               Ver Todas
             </Button>
           </div>
@@ -407,7 +339,7 @@ export default function Welcome() {
                     <CardHeader className="p-0">
                       <div className="aspect-video w-full overflow-hidden">
                         <img
-                          src={post.image}
+                          src={post.cover_image ?? ''}
                           alt={post.title}
                           className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                         />
@@ -415,18 +347,18 @@ export default function Welcome() {
                     </CardHeader>
 
                     <CardContent className="grow space-y-4 p-6 text-left">
-                      <h3 className="line-clamp-2 text-lg leading-tight font-bold text-gray-900">
+                      <h3 className="line-clamp-2 text-lg leading-tight font-bold">
                         {post.title}
                       </h3>
                       <p className="line-clamp-3 text-sm text-gray-500">
-                        {post.description}
+                        {post.content.substring(0, 100)}...
                       </p>
                     </CardContent>
 
                     <CardFooter className="p-6 pt-0">
                       <Button
                         variant="ghost"
-                        className="flex items-center gap-2 rounded-lg bg-[#f8f9fa] p-0 px-4 py-2 font-semibold text-gray-700 hover:bg-gray-200 hover:text-black"
+                        className="flex items-center gap-2 rounded-lg bg-button-primary p-0 px-4 py-2 font-semibold hover:bg-button-secondary hover:text-black"
                       >
                         Leia mais <ArrowRight className="h-4 w-4" />
                       </Button>

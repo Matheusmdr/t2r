@@ -1,4 +1,6 @@
+import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
+import { buttonVariants } from './ui/button';
 
 export default function Header() {
   const navLinks = [
@@ -24,12 +26,12 @@ export default function Header() {
           </div>
         </div>
 
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-sm font-medium transition-colors hover:text-gray-400"
+              className="text-xs font-medium transition-colors hover:text-gray-400 md:text-base"
             >
               {link.name}
             </Link>
@@ -39,7 +41,10 @@ export default function Header() {
         <div>
           <Link
             href="/suporte"
-            className="rounded-md bg-white px-5 py-2 text-sm font-bold text-black transition-all hover:bg-gray-200"
+            className={cn(
+              buttonVariants({ variant: 'default' }),
+              'hover:broder flex h-auto! items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:border hover:border-white hover:bg-button-secondary hover:text-white',
+            )}
           >
             Suporte Técnico
           </Link>

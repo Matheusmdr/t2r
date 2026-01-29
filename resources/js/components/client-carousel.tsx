@@ -181,7 +181,7 @@ export default function ClientCarousel() {
   return (
     <section className="w-full bg-white py-16">
       <div className="mx-auto max-w-6xl px-8">
-        <h2 className="mb-12 text-center text-2xl font-semibold text-slate-700 md:text-3xl">
+        <h2 className="mb-12 text-center text-lg font-semibold md:text-xl">
           Conheça quem confia em nossos projetos
         </h2>
 

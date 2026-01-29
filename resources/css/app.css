@@ -60,6 +60,10 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --color-text-primary: var(--text-primary);
+
+  --color-bg: var(--bg);
+  --color-button-primary: var(--button-primary);
+  --color-button-secondary: var(--button-secondary);
 }
 
 :root {
@@ -98,6 +102,9 @@
   --sidebar-ring: oklch(0.87 0 0);
 
   --text-primary: oklch(0.2621 0.0095 248.19);
+  --bg: oklch(0.9376 0.0027 286.35);
+  --button-primary: oklch(0.9692 0.0034 247.86);
+  --button-secondary: oklch(0.2221 0 0);
 }
 
 .dark {

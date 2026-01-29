@@ -37,10 +37,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-5 text-sm font-bold tracking-wider uppercase">
-              Acessos
-            </h4>
-            <ul className="space-y-3 text-sm text-gray-300">
+            <h4 className="mb-5 text-sm font-bold md:text-base">Acessos</h4>
+            <ul className="space-y-3 text-xs text-gray-300 md:text-sm">
               {links.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -93,7 +91,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col items-end justify-between text-[11px] text-gray-500 md:flex-row md:items-center">
+        <div className="flex flex-col items-end justify-between text-xs text-gray-500 md:flex-row md:items-center md:text-sm">
           <div className="text-left leading-relaxed opacity-70">
             <p>Avenida Da Saudade, 535, Sala 86,</p>
             <p>Parque Empresarial, Presidente Prudente/SP</p>
@@ -120,10 +118,8 @@ function ContactColumn({
 
   return (
     <div>
-      <h4 className="mb-5 text-sm font-bold tracking-wider uppercase">
-        {title}
-      </h4>
-      <div className="space-y-4 text-sm text-gray-300">
+      <h4 className="mb-5 text-sm font-bold md:text-base">{title}</h4>
+      <div className="space-y-4 text-xs text-gray-300 md:text-sm">
         <a
           href={`https://wa.me/${cleanPhone}`}
           className="group flex items-center gap-3 transition-colors hover:text-white"

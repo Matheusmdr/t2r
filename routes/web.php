@@ -7,12 +7,11 @@ use Laravel\Fortify\Features;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('public.home');
 
 
 Route::get('/metashape',  function () {
@@ -63,6 +62,20 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/product-categories/edit/{productCategory}', [ProductCategoryController::class, 'edit'])->name('product-categories.edit');
     Route::put('/product-categories/{productCategory}', [ProductCategoryController::class, 'update'])->name('product-categories.update');
     Route::delete('/product-categories/delete/{productCategory}', [ProductCategoryController::class, 'destroy'])->name('product-categories.destroy');
+
+    Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
+    Route::get('/banners/create', [BannerController::class, 'create'])->name('banners.create');
+    Route::post('/banners', [BannerController::class, 'store'])->name('banners.store');
+    Route::get('/banners/edit/{banner}', [BannerController::class, 'edit'])->name('banners.edit');
+    Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banners.update');
+    Route::delete('/banners/delete/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
+
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/posts/edit/{post}', [PostController::class, 'edit'])->name('posts.edit');
+    Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('/posts/delete/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
     Route::get('/settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
     Route::post('/settings', [SiteSettingController::class, 'update'])->name('settings.update');

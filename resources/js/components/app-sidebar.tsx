@@ -14,6 +14,8 @@ import {
 } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 
+import banners from '@/routes/admin/banners';
+import posts from '@/routes/admin/posts';
 import categories from '@/routes/admin/product-categories';
 import products from '@/routes/admin/products';
 import services from '@/routes/admin/services';
@@ -33,6 +35,16 @@ const mainNavItems: NavItem[] = [
   {
     title: 'Categorias',
     href: categories.index(),
+    icon: LayoutGrid,
+  },
+  {
+    title: 'Banners',
+    href: banners.index(),
+    icon: LayoutGrid,
+  },
+  {
+    title: 'Posts',
+    href: posts.index(),
     icon: LayoutGrid,
   },
 ];
