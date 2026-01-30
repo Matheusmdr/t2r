@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('public.home');
@@ -27,6 +28,8 @@ Route::get('/sobre',  function () {
 Route::get('/contato',  function () {
     return Inertia::render('contact');
 })->name('public.contact.index');
+
+Route::post('/contato', [ContactController::class, 'store'])->name('public.contact.store');
 
 // Listagem e Detalhes de Produtos (Público)
 Route::get('/produtos', [ProductController::class, 'indexPublic'])->name('public.products.index');

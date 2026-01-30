@@ -56,6 +56,7 @@ export function CreateAndEditPost({ data }: { data?: Post }) {
     router.post(url, {
       ...values,
       cover_image: values.coverImage?.file,
+
       // Converte a string de tags de volta para array para o backend
       tags: values.tags ? stringToTags(values.tags) : [],
       _method: data ? 'put' : 'post',
