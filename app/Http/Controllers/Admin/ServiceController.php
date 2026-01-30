@@ -11,6 +11,13 @@ use App\Http\Controllers\Controller;
 
 class ServiceController extends Controller
 {
+    public function indexPublic()
+    {
+        return Inertia::render('services/index', [
+            'services' => Service::latest()->get(),
+        ]);
+    }
+
     public function index()
     {
         return Inertia::render('admin/services/index', [
@@ -18,15 +25,27 @@ class ServiceController extends Controller
         ]);
     }
 
+    public function showPublic(string $serviceSlug)
+    {
+        $service = Service::where('slug', $serviceSlug)->firstOrFail();
+
+        return Inertia::render('services/show', [
+            'service' => $service,
+            'relatedServices' => Service::where('id', '!=', $service->id)
+                ->latest()
+                ->take(8)
+                ->get(),
+        ]);
+    }
+
+
     public function create()
     {
         return Inertia::render('admin/services/create');
     }
 
-    public function edit(int $serviceId)
+    public function edit(Service $service)
     {
-        $service = Service::findOrFail($serviceId);
-
         return Inertia::render('admin/services/edit', [
             'service' => $service
         ]);
@@ -55,9 +74,8 @@ class ServiceController extends Controller
         return redirect()->route('admin.services.index')->with('message', 'Serviço criado com sucesso!');
     }
 
-    public function update(Request $request, int $serviceId)
+    public function update(Request $request, Service $service)
     {
-        $service = Service::findOrFail($serviceId);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -88,10 +106,8 @@ class ServiceController extends Controller
         return redirect()->route('admin.services.index')->with('message', 'Serviço atualizado com sucesso!');
     }
 
-    public function destroy(int $serviceId)
+    public function destroy(Service $service)
     {
-        $service = Service::findOrFail($serviceId);
-
         // 1. Deletar a imagem de capa do Storage
         if ($service->cover_image) {
             Storage::disk('public')->delete($service->cover_image);

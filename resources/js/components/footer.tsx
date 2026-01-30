@@ -1,26 +1,28 @@
-import { Link } from '@inertiajs/react';
-
-interface NavLink {
-  name: string;
-  href: string;
-}
+import publicRoutes from '@/routes/public';
+import { SharedData } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
 
 interface SocialProps {
   children: React.ReactNode;
-  href: string;
+  href?: string | null;
 }
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const {
+    props: { footer },
+  } = usePage<SharedData>();
 
-  const links: NavLink[] = [
-    { name: 'Produtos', href: '/produtos' },
-    { name: 'Serviços', href: '/servicos' },
-    { name: 'Metashape', href: '/metashape' },
-    { name: 'Sobre Nós', href: '/sobre-nos' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Fale Conosco', href: '/contato' },
+  const navLinks = [
+    { name: 'Produtos', href: publicRoutes.products.index() },
+    { name: 'Serviços', href: publicRoutes.services.index() },
+    { name: 'Metashape', href: publicRoutes.metashape.index() },
+    { name: 'Sobre Nós', href: publicRoutes.about.index() },
+    { name: 'Blog', href: publicRoutes.blog.index() },
+    { name: 'Fale Conosco', href: publicRoutes.contact.index() },
   ];
+
+  console.log(footer);
 
   return (
     <footer className="bg-[#1a1d21] px-6 pt-16 pb-8 font-sans text-white">
@@ -39,7 +41,7 @@ export default function Footer() {
           <div>
             <h4 className="mb-5 text-sm font-bold md:text-base">Acessos</h4>
             <ul className="space-y-3 text-xs text-gray-300 md:text-sm">
-              {links.map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -52,23 +54,13 @@ export default function Footer() {
             </ul>
           </div>
 
-          <ContactColumn
-            title="Comercial"
-            phone="+55 18 99613-1404"
-            email="contato@t2rtecnologia.com.br"
-          />
-
-          <ContactColumn
-            title="Administrativo/ Financeiro"
-            phone="+55 18 99774-9080"
-            email="adm@t2rtecnologia.com.br"
-          />
-
-          <ContactColumn
-            title="Suporte Técnico"
-            phone="+55 18 99721-6319"
-            email="suporte@t2rtecnologia.com.br"
-          />
+          {footer.departments.map((department) => (
+            <ContactColumn
+              title={department.name}
+              phone={department.whatsapp ?? ''}
+              email={department.email ?? ''}
+            />
+          ))}
         </div>
 
         <div className="relative my-12 flex items-center justify-center">
@@ -76,16 +68,16 @@ export default function Footer() {
             <div className="w-full border-t border-gray-700/40"></div>
           </div>
           <div className="relative flex gap-4 bg-[#1a1d21] px-6">
-            <SocialCircle href="#">
+            <SocialCircle href={footer.settings.facebook_url}>
               <FacebookIcon />
             </SocialCircle>
-            <SocialCircle href="#">
+            <SocialCircle href={footer.settings.instagram_url}>
               <InstagramIcon />
             </SocialCircle>
-            <SocialCircle href="#">
+            <SocialCircle href={footer.settings.linkedin_url}>
               <LinkedinIcon />
             </SocialCircle>
-            <SocialCircle href="#">
+            <SocialCircle href={footer.settings.youtube_url}>
               <YoutubeIcon />
             </SocialCircle>
           </div>
@@ -93,8 +85,7 @@ export default function Footer() {
 
         <div className="flex flex-col items-end justify-between text-xs text-gray-500 md:flex-row md:items-center md:text-sm">
           <div className="text-left leading-relaxed opacity-70">
-            <p>Avenida Da Saudade, 535, Sala 86,</p>
-            <p>Parque Empresarial, Presidente Prudente/SP</p>
+            {footer.settings.address}
           </div>
           <p className="mt-4 font-medium opacity-80 md:mt-0">
             Copyright © {currentYear} - T2R Soluções Tecnológicas
@@ -141,12 +132,16 @@ function ContactColumn({
 
 function SocialCircle({ children, href }: SocialProps) {
   return (
-    <a
-      href={href}
-      className="flex h-9 w-9 items-center justify-center rounded-full bg-[#3d4146] transition-all duration-300 hover:bg-gray-500"
-    >
-      {children}
-    </a>
+    <>
+      {href?.trim() && (
+        <a
+          href={href}
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-[#3d4146] transition-all duration-300 hover:bg-gray-500"
+        >
+          {children}
+        </a>
+      )}
+    </>
   );
 }
 

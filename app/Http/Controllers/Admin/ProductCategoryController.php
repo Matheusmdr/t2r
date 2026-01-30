@@ -84,7 +84,6 @@ class ProductCategoryController extends Controller
             'is_active'   => 'boolean',
         ]);
 
-        // Atualiza o slug se o título mudar
         if ($request->title !== $productCategory->title) {
             $validated['slug'] = Str::slug($request->title);
         }

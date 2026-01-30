@@ -22,13 +22,6 @@ export interface NavItem {
   isActive?: boolean;
 }
 
-export interface SharedData {
-  name: string;
-  auth: Auth;
-  sidebarOpen: boolean;
-  [key: string]: unknown;
-}
-
 export interface User {
   id: number;
   name: string;
@@ -145,4 +138,30 @@ export interface Post extends BaseEntity {
   is_published: boolean;
   created_at: string;
   updated_at: string;
+}
+
+export interface SiteSetting extends BaseEntity {
+  address: string;
+  facebook_url?: string | null;
+  instagram_url?: string | null;
+  linkedin_url?: string | null;
+  youtube_url?: string | null;
+}
+
+export interface Department extends BaseEntity {
+  name: string;
+  whatsapp?: string | null;
+  email?: string | null;
+  sort_order: number;
+}
+
+export interface SharedData {
+  name: string;
+  auth: Auth;
+  sidebarOpen: boolean;
+  footer: {
+    settings: SiteSetting;
+    departments: Department[];
+  };
+  [key: string]: unknown;
 }

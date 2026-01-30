@@ -1,7 +1,7 @@
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 import ClientCarousel from '@/components/client-carousel';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -17,6 +17,13 @@ import {
 } from '@/components/ui/carousel';
 import { VideoPlayer } from '@/components/video-player';
 import MainLayout from '@/layouts/main-layout';
+import { cn } from '@/lib/utils';
+import { index as indexBlog, show as showBlog } from '@/routes/public/blog';
+import { index as indexMetaShape } from '@/routes/public/metashape';
+import {
+  index as indexProduct,
+  show as showProduct,
+} from '@/routes/public/products';
 import { Banner, Post, Product } from '@/types';
 import { ArrowRight, Banknote, MapPin, Target, Timer } from 'lucide-react';
 
@@ -153,9 +160,15 @@ export default function Welcome({ posts, products, banners }: Props) {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 flex items-center justify-between">
             <h2 className="text-2xl font-bold md:text-3xl">Nossos produtos</h2>
-            <Button className="flex h-auto! items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white">
+            <Link
+              href={indexProduct()}
+              className={cn(
+                buttonVariants({ variant: 'default' }),
+                'flex h-auto! w-fit items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white',
+              )}
+            >
               Ver Todos
-            </Button>
+            </Link>
           </div>
 
           <Carousel
@@ -183,15 +196,19 @@ export default function Welcome({ posts, products, banners }: Props) {
                     </CardContent>
 
                     <CardFooter className="mt-4 flex flex-col items-start space-y-4 p-0">
-                      <h3 className="min-h-12 text-sm leading-snug font-semibold md:text-base">
+                      <h3 className="min-h-12 text-sm font-semibold text-text-primary md:text-base">
                         {product.title}
                       </h3>
-                      <Button
-                        variant="secondary"
-                        className="rounded-md border border-gray-300 px-6 py-2 font-medium hover:bg-gray-200"
+
+                      <Link
+                        href={showProduct({ slug: product.slug })}
+                        className={cn(
+                          buttonVariants({ variant: 'default' }),
+                          'flex h-auto! w-fit items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white',
+                        )}
                       >
                         Saiba Mais
-                      </Button>
+                      </Link>
                     </CardFooter>
                   </Card>
                 </CarouselItem>
@@ -304,9 +321,15 @@ export default function Welcome({ posts, products, banners }: Props) {
             </p>
 
             <div>
-              <Button className="flex h-auto! items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white">
+              <Link
+                href={indexMetaShape()}
+                className={cn(
+                  buttonVariants({ variant: 'default' }),
+                  'flex h-auto! w-fit items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white',
+                )}
+              >
                 Saiba Mais
-              </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -317,9 +340,15 @@ export default function Welcome({ posts, products, banners }: Props) {
             <h2 className="text-2xl font-bold md:text-3xl">
               Confira nossas postagens
             </h2>
-            <Button className="flex h-auto! items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white">
+            <Link
+              href={indexBlog()}
+              className={cn(
+                buttonVariants({ variant: 'default' }),
+                'flex h-auto! w-fit items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white',
+              )}
+            >
               Ver Todas
-            </Button>
+            </Link>
           </div>
 
           <Carousel
@@ -347,21 +376,27 @@ export default function Welcome({ posts, products, banners }: Props) {
                     </CardHeader>
 
                     <CardContent className="grow space-y-4 p-6 text-left">
-                      <h3 className="line-clamp-2 text-lg leading-tight font-bold">
+                      <h3 className="line-clamp-2 text-lg font-bold text-text-primary">
                         {post.title}
                       </h3>
-                      <p className="line-clamp-3 text-sm text-gray-500">
-                        {post.content.substring(0, 100)}...
-                      </p>
+                      <div
+                        className="line-clamp-3 text-sm text-gray-500"
+                        dangerouslySetInnerHTML={{
+                          __html: post.content.substring(0, 100) + '...',
+                        }}
+                      />
                     </CardContent>
 
                     <CardFooter className="p-6 pt-0">
-                      <Button
-                        variant="ghost"
-                        className="flex items-center gap-2 rounded-lg bg-button-primary p-0 px-4 py-2 font-semibold hover:bg-button-secondary hover:text-black"
+                      <Link
+                        href={showBlog({ slug: post.slug })}
+                        className={cn(
+                          buttonVariants({ variant: 'default' }),
+                          'flex h-auto! w-fit items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white',
+                        )}
                       >
                         Leia mais <ArrowRight className="h-4 w-4" />
-                      </Button>
+                      </Link>
                     </CardFooter>
                   </Card>
                 </CarouselItem>

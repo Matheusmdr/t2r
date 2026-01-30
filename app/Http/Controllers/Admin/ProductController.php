@@ -14,6 +14,28 @@ use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
+
+    public function indexPublic()
+    {
+        return Inertia::render('products/index', [
+            'products' => Product::with('category')->latest()->get(),
+        ]);
+    }
+
+    public function showPublic(string $productSlug)
+    {
+
+        $product = Product::where('slug', $productSlug)->firstOrFail();
+        $relatedProducts = Product::where('id', '!=', $product->id)
+                        ->latest()
+                        ->take(8)
+                        ->get();
+        return Inertia::render('products/show', [
+            'product' => $product,
+            'relatedProducts' => $relatedProducts,
+        ]);
+    }
+
     public function index()
     {
         return Inertia::render('admin/products/index', [
@@ -29,10 +51,8 @@ class ProductController extends Controller
         ]);
     }
 
-    public function edit(int $productId)
+    public function edit(Product $product)
     {
-        $product = Product::findOrFail($productId);
-
         return Inertia::render('admin/products/edit', [
             'product' => $product,
             'categories' => ProductCategory::all()
@@ -71,10 +91,8 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'Produto criado com sucesso!');
     }
 
-    public function update(Request $request, int $productId)
+    public function update(Request $request, Product $product)
     {
-        $product = Product::findOrFail($productId);
-
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'product_category_id' => 'required|exists:product_categories,id',
@@ -134,10 +152,8 @@ class ProductController extends Controller
         return redirect()->back()->with('message', 'Produto atualizado com sucesso!');
     }
 
-    public function destroy(int $productId)
+    public function destroy(Product $product)
     {
-        $product = Product::findOrFail($productId);
-
         // 1. Deletar a capa do Storage
         if ($product->cover_image) {
             Storage::disk('public')->delete($product->cover_image);

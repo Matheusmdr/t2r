@@ -22,10 +22,8 @@ class BannerController extends Controller
         return Inertia::render('admin/banners/create');
     }
 
-    public function edit(int $bannerId)
+    public function edit(Banner $banner)
     {
-        $banner = Banner::findOrFail($bannerId);
-
         return Inertia::render('admin/banners/edit', [
             'banner' => $banner,
         ]);
@@ -44,12 +42,10 @@ class BannerController extends Controller
 
         $data = $validated;
 
-        // Upload Desktop Image
         if ($request->hasFile('image_path')) {
             $data['image_path'] = '/storage/' . $request->file('image_path')->store('banners', 'public');
         }
 
-        // Upload Mobile Image
         if ($request->hasFile('image_path_mobile')) {
             $data['image_path_mobile'] = '/storage/' . $request->file('image_path_mobile')->store('banners', 'public');
         }
@@ -59,10 +55,8 @@ class BannerController extends Controller
         return redirect()->back()->with('message', 'Banner criado com sucesso!');
     }
 
-    public function update(Request $request, int $bannerId)
+    public function update(Request $request, Banner $banner)
     {
-        $banner = Banner::findOrFail($bannerId);
-
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'image_path' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -74,7 +68,6 @@ class BannerController extends Controller
 
         $data = $validated;
 
-        // Atualização da Imagem Desktop
         if ($request->hasFile('image_path')) {
             if ($banner->image_path) {
                 Storage::disk('public')->delete(str_replace('/storage/', '', $banner->image_path));
@@ -82,7 +75,6 @@ class BannerController extends Controller
             $data['image_path'] = '/storage/' . $request->file('image_path')->store('banners', 'public');
         }
 
-        // Atualização da Imagem Mobile
         if ($request->hasFile('image_path_mobile')) {
             if ($banner->image_path_mobile) {
                 Storage::disk('public')->delete(str_replace('/storage/', '', $banner->image_path_mobile));
@@ -95,21 +87,16 @@ class BannerController extends Controller
         return redirect()->back()->with('message', 'Banner atualizado com sucesso!');
     }
 
-    public function destroy(int $bannerId)
+    public function destroy(Banner $banner)
     {
-        $banner = Banner::findOrFail($bannerId);
-
-        // 1. Deletar imagem desktop
         if ($banner->image_path) {
             Storage::disk('public')->delete(str_replace('/storage/', '', $banner->image_path));
         }
 
-        // 2. Deletar imagem mobile
         if ($banner->image_path_mobile) {
             Storage::disk('public')->delete(str_replace('/storage/', '', $banner->image_path_mobile));
         }
 
-        // 3. Deletar registro
         $banner->delete();
 
         return redirect()->back()->with('message', 'Banner removido com sucesso!');

@@ -11,6 +11,23 @@ use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
+    public function indexPublic()
+    {
+        return Inertia::render('blog/index', [
+            'posts' => Post::latest()->get(),
+        ]);
+    }
+
+    public function showPublic(string $postSlug)
+    {
+        $post = Post::where('slug', $postSlug)->firstOrFail();
+        $relatedPosts = Post::where('id', '!=', $post->id)->latest()->take(3)->get();
+        return Inertia::render('blog/show', [
+            'post' => $post,
+            'relatedPosts' => $relatedPosts,
+        ]);
+    }
+
     public function index()
     {
         return Inertia::render('admin/posts/index', [
@@ -23,9 +40,8 @@ class PostController extends Controller
         return Inertia::render('admin/posts/create');
     }
 
-    public function edit(int $postId)
+    public function edit(Post $post)
     {
-        $post = Post::findOrFail($postId);
 
         return Inertia::render('admin/posts/edit', [
             'post' => $post,
@@ -54,10 +70,8 @@ class PostController extends Controller
         return redirect()->back()->with('message', 'Post criado com sucesso!');
     }
 
-    public function update(Request $request, int $postId)
+    public function update(Request $request, Post $post)
     {
-        $post = Post::findOrFail($postId);
-
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
@@ -68,14 +82,11 @@ class PostController extends Controller
 
         $data = $validated;
 
-        // Atualiza slug apenas se o título mudar
         if ($request->title !== $post->title) {
             $data['slug'] = Str::slug($request->title);
         }
 
-        // Atualização da Capa
         if ($request->hasFile('cover_image')) {
-            // Deleta a imagem antiga se existir
             if ($post->cover_image) {
                 Storage::disk('public')->delete(str_replace('/storage/', '', $post->cover_image));
             }
@@ -87,16 +98,13 @@ class PostController extends Controller
         return redirect()->back()->with('message', 'Post atualizado com sucesso!');
     }
 
-    public function destroy(int $postId)
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($postId);
 
-        // 1. Deletar a capa do Storage
         if ($post->cover_image) {
             Storage::disk('public')->delete(str_replace('/storage/', '', $post->cover_image));
         }
 
-        // 2. Deletar o registro no Banco
         $post->delete();
 
         return redirect()->back()->with('message', 'Post removido com sucesso!');

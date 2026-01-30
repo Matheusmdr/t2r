@@ -1,3 +1,4 @@
+import ClientCarousel from '@/components/client-carousel';
 import { PageHero } from '@/components/page-hero';
 import { VideoPlayer } from '@/components/video-player';
 import MainLayout from '@/layouts/main-layout';
@@ -67,7 +68,7 @@ function ServiceItem({
 export default function SobreNosPage() {
   return (
     <MainLayout>
-      <PageHero title="Sobre nós" items={['Home', 'Sobre Nós']} />
+      <PageHero title="Sobre Nós" items={['Home', 'Sobre Nós']} />
 
       <section className="mx-auto flex max-w-5xl flex-col items-center px-6 py-20 text-center">
         <div className="mb-20 grid grid-cols-3 gap-16 md:gap-32">
@@ -77,12 +78,12 @@ export default function SobreNosPage() {
         </div>
 
         <div className="mb-24 max-w-3xl space-y-8">
-          <p className="text-[14px] leading-[1.8] font-medium">
+          <p className="text-sm font-medium md:text-base">
             A T2R é uma empresa de tecnologia que desenvolve soluções em áreas
             do conhecimento como Cartografia, Geodésia por Satélites,
             Fotogrametria, Ciência da Computação e Eletrônica.
           </p>
-          <p className="text-[14px] leading-[1.8] font-medium">
+          <p className="text-sm font-medium md:text-base">
             Realizamos a integração de sistemas eletro/eletrônicos,
             computacionais e industriais, desenvolvimento de algoritmos para
             sistemas embarcados e IoT (Hardware e Software), processamento e
@@ -115,6 +116,9 @@ export default function SobreNosPage() {
           localVideo="/home/alt_mov_t2r_camp-inst_1920x1080px.mp4"
           thumbnail="/t2r-thumb.png"
         />
+      </section>
+      <section>
+        <ClientCarousel />
       </section>
     </MainLayout>
   );

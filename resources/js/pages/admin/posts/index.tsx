@@ -17,7 +17,7 @@ export default function Page({ posts }: Props) {
         <div className="flex flex-col gap-2 p-4">
           <div>
             <Button className="w">
-              <Link href="/admin/products/create">Adicionar Produto</Link>
+              <Link href="/admin/posts/create">Adicionar Posts</Link>
             </Button>
           </div>
           {posts && <DataTable data={posts} columns={postsColumns} />}

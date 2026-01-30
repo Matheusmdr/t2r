@@ -42,6 +42,9 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'flash' => [
+                'message' => $request->session()->get('message'),
+            ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             // Dados do Footer com Cache de 24 horas
             'footer' => Cache::remember('site_footer_data', now()->addDay(), function () {

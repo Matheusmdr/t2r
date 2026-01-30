@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('public.home');
@@ -19,12 +21,12 @@ Route::get('/metashape',  function () {
 })->name('public.metashape.index');
 
 Route::get('/sobre',  function () {
-    return Inertia::render('sobre');
-})->name('public.sobre.index');
+    return Inertia::render('about');
+})->name('public.about.index');
 
 Route::get('/contato',  function () {
-    return Inertia::render('fale-conosco');
-})->name('public.contato.index');
+    return Inertia::render('contact');
+})->name('public.contact.index');
 
 // Listagem e Detalhes de Produtos (Público)
 Route::get('/produtos', [ProductController::class, 'indexPublic'])->name('public.products.index');
@@ -33,6 +35,10 @@ Route::get('/produtos/{slug}', [ProductController::class, 'showPublic'])->name('
 // Listagem e Detalhes de Serviços (Público)
 Route::get('/servicos', [ServiceController::class, 'indexPublic'])->name('public.services.index');
 Route::get('/servicos/{slug}', [ServiceController::class, 'showPublic'])->name('public.services.show');
+
+Route::get('/blog', [PostController::class, 'indexPublic'])->name('public.blog.index');
+Route::get('/blog/{slug}', [PostController::class, 'showPublic'])->name('public.blog.show');
+
 
 
 // --- ÁREA ADMINISTRATIVA (Restrita) ---
@@ -78,6 +84,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::delete('/posts/delete/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
     Route::get('/settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
+    Route::post('/settings', [SiteSettingController::class, 'update'])->name('settings.update');
+
+    Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
+    Route::put('/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
+    Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
+
+    Route::get('/settings', [SiteSettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [SiteSettingController::class, 'update'])->name('settings.update');
 
     Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');

@@ -1,8 +1,9 @@
 import { PageHero } from '@/components/page-hero';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { VideoPlayer } from '@/components/video-player';
 
 import MainLayout from '@/layouts/main-layout';
+import { cn } from '@/lib/utils';
 import { Check, X } from 'lucide-react';
 
 interface FeatureRowProps {
@@ -47,7 +48,9 @@ const features: FeatureRowProps[] = [
 function FeatureRow({ label, pro, std }: FeatureRowProps) {
   return (
     <div className="grid grid-cols-[1.5fr_1fr_1fr] items-center border-b border-gray-100 py-4">
-      <div className="pl-2 text-left text-[15px] font-medium">{label}</div>
+      <div className="pl-2 text-left text-sm font-medium md:text-base">
+        {label}
+      </div>
       <div className="flex justify-center">
         <div
           className={`${pro ? 'bg-[#1a8344]' : 'bg-[#e31e24]'} rounded p-0.5 text-white shadow-sm`}
@@ -80,34 +83,39 @@ export default function MetashapePage() {
       <PageHero title="Metashape" items={['Home', 'Software', 'Metashape']} />
 
       <section className="py-20">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6">
           <VideoPlayer
             thumbnail="/metashape-thumb.webp"
             embedUrl="https://www.youtube.com/embed/qTDgAuybMmw"
           />
 
           <div className="space-y-6">
-            <h2 className="text-4xl leading-tight font-extrabold">
-              Revendedor Oficial no Brasil - Agisoft Metashape
-            </h2>
-            <p className="text-lg leading-relaxed font-medium">
-              Agisoft Metashape é um software independente que realiza o
-              processamento fotogramétrico de imagens digitais e gera dados
-              espaciais em 3D para uso em aplicações GIS, documentação de
-              patrimônio cultural e produção de efeitos visuais, bem como para
-              medições indiretas de objetos de várias escalas.
-            </p>
+            <div className="space-y-4 text-center">
+              <p className="text-sm leading-relaxed font-medium md:text-base">
+                O Agisoft Metashape é uma solução de software de ponta, com
+                tecnologia para levar a fotogrametria ao seu limite, contando
+                com técnicas de machine learning para tarefas de
+                pós-processamento e análise.
+              </p>
 
-            <Button className="border-none bg-button-primary px-6 text-text-primary shadow-sm hover:bg-button-secondary hover:text-white">
-              Saiba Mais
-            </Button>
+              <p className="text-sm leading-relaxed font-medium md:text-base">
+                O software permite processar imagens de câmeras RGB ou
+                multiespectrais, incluindo sistemas multicâmeras, em informações
+                espaciais de alto valor na forma de nuvens de pontos, modelos
+                poligonais texturizados, ortomosaicos georreferenciados e DSMs /
+                DTMs. O pós-processamento adicional permite eliminar sombras e
+                textura dos modelos, calcular índices de vegetação e extrair
+                informações para planejamento de mapas de equipamentos
+                agrícolas, classificar automaticamente nuvens de pontos, etc.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="py-20">
         <div className="mx-auto max-w-6xl px-6 text-center">
-          <h2 className="mb-16 text-3xl font-bold tracking-tight uppercase">
+          <h2 className="mb-16 text-2xl font-bold md:text-3xl">
             Comparação das Licenças
           </h2>
 
@@ -121,7 +129,9 @@ export default function MetashapePage() {
                 alt="Professional"
                 className="mx-auto"
               />
-              <p className="text-lg font-bold">Versão Professional</p>
+              <p className="text-base font-bold md:text-lg">
+                Versão Professional
+              </p>
             </div>
             <div className="space-y-4">
               <img
@@ -129,7 +139,7 @@ export default function MetashapePage() {
                 alt="Standard"
                 className="mx-auto"
               />
-              <p className="text-lg font-bold">Versão Standard</p>
+              <p className="text-base font-bold md:text-lg">Versão Standard</p>
             </div>
           </div>
 
@@ -140,9 +150,17 @@ export default function MetashapePage() {
           </div>
 
           <div className="mt-16">
-            <Button className="border-none bg-button-primary px-6 text-text-primary shadow-sm hover:bg-button-secondary hover:text-white">
+            <a
+              href={'https://wa.me/5518996131404'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                buttonVariants({ variant: 'default' }),
+                'mx-auto flex h-auto! w-fit items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white',
+              )}
+            >
               Solicitar Orçamento
-            </Button>
+            </a>
           </div>
         </div>
       </section>
