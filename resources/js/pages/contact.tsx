@@ -1,6 +1,6 @@
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { router, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -105,6 +105,7 @@ export default function FaleConoscoPage() {
 
   return (
     <MainLayout>
+      <Head title="Fale Conosco" />
       <PageHero title="Fale Conosco" items={['Home', 'Fale Conosco']} />
 
       <section className="relative z-20 mx-auto -mt-10 max-w-6xl px-6">

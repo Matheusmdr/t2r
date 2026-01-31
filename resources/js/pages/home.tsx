@@ -1,31 +1,18 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 
+import { BannerSlider } from '@/components/banner-slider';
 import ClientCarousel from '@/components/client-carousel';
+import { PostsCarousel } from '@/components/posts-carousel';
+import { ProductsCarousel } from '@/components/products-carousel';
 import { buttonVariants } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
 import { VideoPlayer } from '@/components/video-player';
 import MainLayout from '@/layouts/main-layout';
 import { cn } from '@/lib/utils';
-import { index as indexBlog, show as showBlog } from '@/routes/public/blog';
+import { index as indexBlog } from '@/routes/public/blog';
 import { index as indexMetaShape } from '@/routes/public/metashape';
-import {
-  index as indexProduct,
-  show as showProduct,
-} from '@/routes/public/products';
+import { index as indexProduct } from '@/routes/public/products';
 import { Banner, Post, Product } from '@/types';
-import { ArrowRight, Banknote, MapPin, Target, Timer } from 'lucide-react';
+import { Banknote, MapPin, Target, Timer } from 'lucide-react';
 
 interface Props {
   posts: Post[];
@@ -34,38 +21,33 @@ interface Props {
 }
 
 export default function Welcome({ posts, products, banners }: Props) {
+  const ppkAdvantages = [
+    {
+      title: '  Redução drástica de pontos de controle',
+      description: '  Redução drástica de pontos de controle',
+      icon: MapPin,
+    },
+    {
+      title: 'Acurácia centimétrica',
+      description: 'Acurácia centimétrica',
+      icon: Target,
+    },
+    {
+      title: 'Redução de tempo em campo',
+      description: 'Redução de tempo em campo',
+      icon: Timer,
+    },
+    {
+      title: 'Redução de custos em campo',
+      description: 'Redução de custos em campo',
+      icon: Banknote,
+    },
+  ];
+
   return (
     <MainLayout>
-      <Head title="Welcome" />
       <section className="mx-auto w-full">
-        <Carousel className="group relative w-full">
-          <CarouselContent>
-            {banners.map((item, index) => (
-              <CarouselItem key={index}>
-                <div className="p-0">
-                  <Card className="overflow-hidden rounded-none border-none py-0">
-                    <CardContent className="relative flex aspect-21/9 items-center justify-end p-0!">
-                      <img
-                        src={item.image_path}
-                        alt={item.title}
-                        className="absolute inset-0 h-full w-full object-cover"
-                      />
-
-                      <div className="relative z-10 mr-12 max-w-md text-right md:mr-24">
-                        <h2 className="text-2xl leading-tight font-extrabold text-black uppercase drop-shadow-sm md:text-4xl">
-                          {item.title}
-                        </h2>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-
-          <CarouselPrevious className="absolute top-1/2 left-4 -translate-y-1/2 border-none bg-black/20 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-black/50" />
-          <CarouselNext className="absolute top-1/2 right-4 -translate-y-1/2 border-none bg-black/20 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-black/50" />
-        </Carousel>
+        <BannerSlider banners={banners} />
       </section>
 
       <section className="px-6 py-20">
@@ -73,32 +55,15 @@ export default function Welcome({ posts, products, banners }: Props) {
           <h2 className="mb-16 text-2xl font-bold md:text-3xl">
             Vantagens da Integração PPK
           </h2>
-
           <div className="mb-24 grid grid-cols-2 gap-8 md:grid-cols-4">
-            <div className="flex flex-col items-center gap-4">
-              <MapPin size={40} />
-              <p className="max-w-56 text-xs font-semibold md:text-lg">
-                Redução drástica de pontos de controle
-              </p>
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <Target size={40} />
-              <p className="max-w-56 text-xs font-semibold md:text-lg">
-                Acurácia centimétrica
-              </p>
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <Timer size={40} />
-              <p className="max-w-56 text-xs font-semibold md:text-lg">
-                Redução de tempo em campo
-              </p>
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <Banknote size={40} />
-              <p className="max-w-56 text-xs font-semibold md:text-lg">
-                Redução de custos em campo
-              </p>
-            </div>
+            {ppkAdvantages.map((advantage, index) => (
+              <div key={index} className="flex flex-col items-center gap-4">
+                <advantage.icon size={40} />
+                <p className="max-w-56 text-xs font-semibold md:text-lg">
+                  {advantage.title}
+                </p>
+              </div>
+            ))}
           </div>
 
           <div className="flex flex-col items-center justify-between gap-12 text-left lg:flex-row">
@@ -112,7 +77,7 @@ export default function Welcome({ posts, products, banners }: Props) {
                 proporcionar dados georreferenciados de alta precisão.
               </p>
             </div>
-            <div className="order-1 flex justify-center lg:order-2 lg:w-1/2 lg:justify-end">
+            <div className="order-1 flex justify-center lg:order-2 lg:w-1/2 lg:justify-start">
               <img
                 src="/home/mapeamento-3d.webp"
                 alt="Mapeamento"
@@ -123,9 +88,9 @@ export default function Welcome({ posts, products, banners }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-gray-200 px-6 py-20">
+      <section className="px-6 py-20">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-16 lg:flex-row">
-          <div className="flex justify-center lg:w-1/2 lg:justify-start">
+          <div className="flex justify-center lg:w-1/2 lg:justify-end">
             <img
               src="/home/drone-air-2s.webp"
               alt="Drone T2R"
@@ -170,54 +135,7 @@ export default function Welcome({ posts, products, banners }: Props) {
               Ver Todos
             </Link>
           </div>
-
-          <Carousel
-            opts={{
-              align: 'start',
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-4">
-              {products.map((product, index) => (
-                <CarouselItem
-                  key={index}
-                  className="basis-full pl-4 sm:basis-1/2 lg:basis-1/4"
-                >
-                  <Card className="flex h-full flex-col border-none bg-transparent shadow-none">
-                    <CardContent className="p-0">
-                      <div className="flex aspect-4/3 items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-white p-4 shadow-sm">
-                        <img
-                          src={product.cover_image ?? ''}
-                          alt={product.title}
-                          className="h-full w-full object-contain"
-                        />
-                      </div>
-                    </CardContent>
-
-                    <CardFooter className="mt-4 flex flex-col items-start space-y-4 p-0">
-                      <h3 className="min-h-12 text-sm font-semibold text-text-primary md:text-base">
-                        {product.title}
-                      </h3>
-
-                      <Link
-                        href={showProduct({ slug: product.slug })}
-                        className={cn(
-                          buttonVariants({ variant: 'default' }),
-                          'flex h-auto! w-fit items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white',
-                        )}
-                      >
-                        Saiba Mais
-                      </Link>
-                    </CardFooter>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-
-            <CarouselPrevious className="-left-12 hidden border-none bg-white/80 lg:flex" />
-            <CarouselNext className="-right-12 hidden border-none bg-white/80 lg:flex" />
-          </Carousel>
+          <ProductsCarousel products={products} />
         </div>
       </section>
 
@@ -230,7 +148,7 @@ export default function Welcome({ posts, products, banners }: Props) {
 
       <section className="bg-[#1a1d21] px-6 py-20 text-white">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-12 lg:flex-row">
-          <div className="flex justify-center lg:w-1/2 lg:justify-start">
+          <div className="flex justify-center lg:w-1/2 lg:justify-end">
             <img
               src="/home/software-processamento.webp"
               alt="Processamento de Dados T2R"
@@ -280,7 +198,7 @@ export default function Welcome({ posts, products, banners }: Props) {
             </p>
           </div>
 
-          <div className="flex justify-center lg:w-1/2 lg:justify-end">
+          <div className="flex justify-center lg:w-1/2 lg:justify-start">
             <img
               src="/home/drone-landscape.webp"
               alt="Drone voando sobre paisagem"
@@ -350,62 +268,7 @@ export default function Welcome({ posts, products, banners }: Props) {
               Ver Todas
             </Link>
           </div>
-
-          <Carousel
-            opts={{
-              align: 'start',
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-4">
-              {posts.map((post, index) => (
-                <CarouselItem
-                  key={index}
-                  className="basis-full pl-4 md:basis-1/2 lg:basis-1/3"
-                >
-                  <Card className="flex h-full flex-col overflow-hidden rounded-2xl border-none bg-white shadow-sm">
-                    <CardHeader className="p-0">
-                      <div className="aspect-video w-full overflow-hidden">
-                        <img
-                          src={post.cover_image ?? ''}
-                          alt={post.title}
-                          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                        />
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="grow space-y-4 p-6 text-left">
-                      <h3 className="line-clamp-2 text-lg font-bold text-text-primary">
-                        {post.title}
-                      </h3>
-                      <div
-                        className="line-clamp-3 text-sm text-gray-500"
-                        dangerouslySetInnerHTML={{
-                          __html: post.content.substring(0, 100) + '...',
-                        }}
-                      />
-                    </CardContent>
-
-                    <CardFooter className="p-6 pt-0">
-                      <Link
-                        href={showBlog({ slug: post.slug })}
-                        className={cn(
-                          buttonVariants({ variant: 'default' }),
-                          'flex h-auto! w-fit items-center gap-2 bg-button-primary px-6! py-3! font-semibold text-text-primary hover:bg-button-secondary hover:text-white',
-                        )}
-                      >
-                        Leia mais <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </CardFooter>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-
-            <CarouselPrevious className="-left-12 hidden border-none bg-white/80 lg:flex" />
-            <CarouselNext className="-right-12 hidden border-none bg-white/80 lg:flex" />
-          </Carousel>
+          <PostsCarousel posts={posts} />
         </div>
       </section>
       <ClientCarousel />

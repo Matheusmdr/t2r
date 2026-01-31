@@ -22,7 +22,6 @@ export default function Footer() {
     { name: 'Fale Conosco', href: publicRoutes.contact.index() },
   ];
 
-  console.log(footer);
 
   return (
     <footer className="bg-[#1a1d21] px-6 pt-16 pb-8 font-sans text-white">

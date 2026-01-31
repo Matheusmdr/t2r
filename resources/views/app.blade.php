@@ -30,12 +30,26 @@
             }
         </style>
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <title inertia>{{ config('app.name', 'T2R Soluções Tecnológicas') }}</title>
 
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="icon" href="/favicon-180x180.png" sizes="180x180">
+        <link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+        {{-- <link rel="icon" href="/favicon.svg" type="image/svg+xml"> --}}
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="T2R Soluções Tecnológicas">
+        <meta property="og:description" content="A T2R é uma empresa de tecnologia que desenvolve soluções em áreas do conhecimento como Cartografia, Geodésia por Satélites, Fotogrametria, Ciência da Computação e Eletrônica.">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:site_name" content="T2R Soluções Tecnológicas">
+        <meta property="og:image" content="/t2r-thumb.png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content='T2R Soluções Tecnológicas' >
+        <meta name="twitter:description" content="A T2R é uma empresa de tecnologia que desenvolve soluções em áreas do conhecimento como Cartografia, Geodésia por Satélites, Fotogrametria, Ciência da Computação e Eletrônica.">
+        <meta name="twitter:image" content="{{ asset('assets/images/placeholder-social.webp') }}">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

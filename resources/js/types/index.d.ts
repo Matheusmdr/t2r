@@ -78,18 +78,16 @@ export interface Product extends BaseEntity {
 
 export interface ServicePlan {
   name: string;
-  price: string | number; // String se vier formatado ("R$ 100"), number se puro
-  description?: string; // Opcional, caso adicione no futuro
+  link: string;
 }
 
 export interface Service extends BaseEntity {
   title: string;
   slug: string;
   short_description: string | null;
-  content: string; // Conteúdo principal (HTML/LongText)
+  content: string;
 
-  // Campos específicos JSON
-  features_list: string[] | null; // Ex: ["Suporte ART", "Orientação Voo"]
+  features_list: string[] | null;
   plans: ServicePlan[] | null;
 
   cover_image: string | null;
@@ -124,17 +122,13 @@ export interface Banner extends BaseEntity {
   updated_at: string;
 }
 
-/**
- * Tipagem para Posts
- * Reflete a estrutura da migration 2026_01_28_021209_create_posts_table.php
- */
 export interface Post extends BaseEntity {
   id: number;
   title: string;
   slug: string;
   content: string;
   cover_image: string | null;
-  tags: string[] | null; // Armazenado como JSON no banco, manipulado como Array
+  tags: string[] | null;
   is_published: boolean;
   created_at: string;
   updated_at: string;

@@ -4,6 +4,7 @@ import { VideoPlayer } from '@/components/video-player';
 
 import MainLayout from '@/layouts/main-layout';
 import { cn } from '@/lib/utils';
+import { Head } from '@inertiajs/react';
 import { Check, X } from 'lucide-react';
 
 interface FeatureRowProps {
@@ -80,6 +81,8 @@ function FeatureRow({ label, pro, std }: FeatureRowProps) {
 export default function MetashapePage() {
   return (
     <MainLayout>
+      <Head title="Metashape" />
+
       <PageHero title="Metashape" items={['Home', 'Software', 'Metashape']} />
 
       <section className="py-20">

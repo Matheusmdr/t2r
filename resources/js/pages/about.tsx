@@ -2,6 +2,7 @@ import ClientCarousel from '@/components/client-carousel';
 import { PageHero } from '@/components/page-hero';
 import { VideoPlayer } from '@/components/video-player';
 import MainLayout from '@/layouts/main-layout';
+import { Head } from '@inertiajs/react';
 import { BarChart3, MapPin, Monitor, Share2 } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -68,6 +69,7 @@ function ServiceItem({
 export default function SobreNosPage() {
   return (
     <MainLayout>
+      <Head title="Sobre Nós" />
       <PageHero title="Sobre Nós" items={['Home', 'Sobre Nós']} />
 
       <section className="mx-auto flex max-w-5xl flex-col items-center px-6 py-20 text-center">
